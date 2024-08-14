@@ -1,36 +1,37 @@
 # Template file for 'gittyup'
 pkgname=gittyup
-description="Gittyup is a graphical Git client for Windows, Linux and macOS designed to help you understand and manage your source code history."
 version=1.4.0
 revision=1
 archs="x86_64"
-#create_wrksrc=yes
-# hostmakedepends="patchelf"
-build-depends="qt5-tools-devel pkg-config"
-short_desc="Gittyup is a graphical Git client designed to help you understand and manage your source code history."
+build_style=cmake
+hostmakedepends="git"
+short_desc="Gittyup is a GUI Git client to help you manage your source code"
 maintainer="Randall Flagg <O@G>"
 license="MIT"
 homepage="https://murmele.github.io/Gittyup/"
+# description="Gittyup is a graphical Git client for Windows, Linux and macOS designed to help you understand and manage your source code history."
+#create_wrksrc=yes
+build-depends="qt5-tools-devel pkg-config"
 # nopie=yes
 # restricted=yes
 #distfiles="https://github.com/Murmele/Gittyup/archive/refs/tags/gittyup_v${version}.zip"
 # checksum="9d97b447007e525f1c65701a989977a6faef4784a80c7ff213b6cd6e392a551f"
 
-do_fetch(){
+do_fetch() {
 	git clone --depth 1 --branch gittyup_v${version} --recursive https://github.com/Murmele/Gittyup.git
 }
 
-post_extract(){
+post_extract() {
 	echo "POST_EXTRACT START"
 # 	rm -rf ./dep
 	echo "POST_EXTRACT DONE"
 }
 
-do_configure(){
+do_configure() {
 	echo "DO_CONFIGURE START"
-cd dep/openssl/openssl
-./config -fPIC
-make
+	cd dep/openssl/openssl
+	./config -fPIC
+	make
 	echo "DO_CONFIGURE DONE"
 }
 
@@ -49,7 +50,7 @@ ninja
 # echo "SUCCESS post extract"
 # }
 
-pre_install(){
+pre_install() {
 	echo "PRE INSTALL START"
 # 	mkdir -p "${pkgname}-${version}"/usr/share/applications
 # 	ls -la ${pkgname}-${version}
