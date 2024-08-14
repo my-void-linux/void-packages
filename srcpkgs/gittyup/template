@@ -1,0 +1,89 @@
+# Template file for 'gittyup'
+pkgname=gittyup
+description="Gittyup is a graphical Git client for Windows, Linux and macOS designed to help you understand and manage your source code history."
+version=1.4.0
+revision=1
+archs="x86_64"
+#create_wrksrc=yes
+# hostmakedepends="patchelf"
+build-depends="qt5-tools-devel pkg-config"
+short_desc="Gittyup is a graphical Git client designed to help you understand and manage your source code history."
+maintainer="Randall Flagg <O@G>"
+license="MIT"
+homepage="https://murmele.github.io/Gittyup/"
+# nopie=yes
+# restricted=yes
+#distfiles="https://github.com/Murmele/Gittyup/archive/refs/tags/gittyup_v${version}.zip"
+# checksum="9d97b447007e525f1c65701a989977a6faef4784a80c7ff213b6cd6e392a551f"
+
+do_fetch(){
+	git clone --depth 1 --branch gittyup_v${version} --recursive https://github.com/Murmele/Gittyup.git
+}
+
+post_extract(){
+	echo "POST_EXTRACT START"
+# 	rm -rf ./dep
+	echo "POST_EXTRACT DONE"
+}
+
+do_configure(){
+	echo "DO_CONFIGURE START"
+cd dep/openssl/openssl
+./config -fPIC
+make
+	echo "DO_CONFIGURE DONE"
+}
+
+do_build() {
+	echo "DO_BUILD START"
+# Start from root of gittyup repo.
+mkdir -p build/release
+cd build/release
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
+ninja
+	echo "SUCCESS do build"
+	echo "DO_BUILD DONE"
+}
+
+# post_extract(){
+# echo "SUCCESS post extract"
+# }
+
+pre_install(){
+	echo "PRE INSTALL START"
+# 	mkdir -p "${pkgname}-${version}"/usr/share/applications
+# 	ls -la ${pkgname}-${version}
+# 	mv "${pkgname}-${version}"/icons/ "${pkgname}-${version}"/usr/share/
+# 	mv "${pkgname}-${version}"/anydesk.desktop "${pkgname}-${version}"/usr/share/applications/
+# 	ls -laR ${pkgname}-${version}/usr/share
+	echo "PRE INSTALL DONE"
+}
+
+do_install() {
+echo "DO INSTALL START"
+# 	vlicense "${pkgname}-${version}"/copyright
+# # 	rm -rf "${pkgname}-${version}"
+	vbin "${pkgname}-${version}/gittyup"
+	vcopy ./rsrc/linux/com.github.Murmele.Gittyup.desktop /usr/share/
+# 	copy ICONS to relevant dir
+# 	/rsrc/Gittyup.iconset/icon_16x16.png
+# ./rsrc/Gittyup.iconset/icon_256x256@2x.png
+# ./rsrc/Gittyup.iconset/icon_128x128.png
+# ./rsrc/Gittyup.iconset/icon_128x128@2x.png
+# ./rsrc/Gittyup.iconset/icon_256x256.png
+# ./rsrc/Gittyup.iconset/icon_32x32@2x.png
+# ./rsrc/Gittyup.iconset/icon_512x512.png
+# ./rsrc/Gittyup.iconset/icon_16x16@2x.png
+# ./rsrc/Gittyup.iconset/icon_64x64@2x.png
+# ./rsrc/Gittyup.iconset/icon_512x512@2x.png
+# ./rsrc/Gittyup.iconset/icon_32x32.png
+# ./rsrc/Gittyup.iconset/icon_64x64.png
+# 	vcopy "${pkgname}-${version}"/usr/share/* /usr/share/
+# 	echo "AAA1"
+# 	pwd
+# 	ls -la /usr/share
+# 	echo "AAA2"
+# 	echo "SUCCESS"
+# 	# 	copy "*" /
+echo "DO INSTALL DONE"
+}
