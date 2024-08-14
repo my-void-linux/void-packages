@@ -4,47 +4,53 @@ version=1.4.0
 revision=1
 archs="x86_64"
 build_style=cmake
-hostmakedepends="git"
+hostmakedepends="git pkg-config"
+makedepends="qt5-tools-devel"
 short_desc="Gittyup is a GUI Git client to help you manage your source code"
 maintainer="Randall Flagg <O@G>"
 license="MIT"
 homepage="https://murmele.github.io/Gittyup/"
 # description="Gittyup is a graphical Git client for Windows, Linux and macOS designed to help you understand and manage your source code history."
 #create_wrksrc=yes
-build-depends="qt5-tools-devel pkg-config"
 # nopie=yes
 # restricted=yes
 #distfiles="https://github.com/Murmele/Gittyup/archive/refs/tags/gittyup_v${version}.zip"
 # checksum="9d97b447007e525f1c65701a989977a6faef4784a80c7ff213b6cd6e392a551f"
 
 do_fetch() {
+	echo "DO_FETCH START"
 	git clone --depth 1 --branch gittyup_v${version} --recursive https://github.com/Murmele/Gittyup.git
+	pwd
+	pause
+	echo "DO_FETCH END"
 }
 
-post_extract() {
-	echo "POST_EXTRACT START"
-# 	rm -rf ./dep
-	echo "POST_EXTRACT DONE"
-}
+# post_extract() {
+# 	echo "POST_EXTRACT START"
+# # 	rm -rf ./dep
+# 	echo "POST_EXTRACT DONE"
+# }
 
 do_configure() {
 	echo "DO_CONFIGURE START"
+	pwd
+	pause
 	cd dep/openssl/openssl
 	./config -fPIC
 	make
 	echo "DO_CONFIGURE DONE"
 }
 
-do_build() {
-	echo "DO_BUILD START"
-# Start from root of gittyup repo.
-mkdir -p build/release
-cd build/release
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
-ninja
-	echo "SUCCESS do build"
-	echo "DO_BUILD DONE"
-}
+# do_build() {
+# 	echo "DO_BUILD START"
+# # Start from root of gittyup repo.
+# mkdir -p build/release
+# cd build/release
+# cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
+# ninja
+# 	echo "SUCCESS do build"
+# 	echo "DO_BUILD DONE"
+# }
 
 # post_extract(){
 # echo "SUCCESS post extract"
