@@ -6,6 +6,7 @@ archs="x86_64"
 build_style=cmake
 hostmakedepends="git pkg-config"
 makedepends="qt5-tools-devel"
+depends="libssl1.1 libcrypto1.1"
 short_desc="Gittyup is a GUI Git client to help you manage your source code"
 maintainer="Randall Flagg <O@G>"
 license="MIT"
@@ -19,9 +20,10 @@ homepage="https://murmele.github.io/Gittyup/"
 
 do_fetch() {
 	echo "DO_FETCH START"
-	git clone --depth 1 --branch gittyup_v${version} --recursive https://github.com/Murmele/Gittyup.git
 	pwd
-	pause
+	echo "about to clone into ${pkgname}-${version}"
+# 	git clone --depth 1 --branch gittyup_v${version} --recursive https://github.com/Murmele/Gittyup.git ${pkgname}-${version}
+# 	halt
 	echo "DO_FETCH END"
 }
 
@@ -34,23 +36,23 @@ do_fetch() {
 do_configure() {
 	echo "DO_CONFIGURE START"
 	pwd
-	pause
 	cd dep/openssl/openssl
+	echo ${wrksrc}/dep/openssl/openssl
 	./config -fPIC
 	make
 	echo "DO_CONFIGURE DONE"
 }
 
-# do_build() {
-# 	echo "DO_BUILD START"
-# # Start from root of gittyup repo.
-# mkdir -p build/release
-# cd build/release
-# cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
-# ninja
-# 	echo "SUCCESS do build"
-# 	echo "DO_BUILD DONE"
-# }
+do_build() {
+	echo "DO_BUILD START"
+# Start from root of gittyup repo.
+mkdir -p build/release
+cd build/release
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
+ninja
+	echo "SUCCESS do build"
+	echo "DO_BUILD DONE"
+}
 
 # post_extract(){
 # echo "SUCCESS post extract"
@@ -68,10 +70,11 @@ pre_install() {
 
 do_install() {
 echo "DO INSTALL START"
+pwd
 # 	vlicense "${pkgname}-${version}"/copyright
 # # 	rm -rf "${pkgname}-${version}"
-	vbin "${pkgname}-${version}/gittyup"
-	vcopy ./rsrc/linux/com.github.Murmele.Gittyup.desktop /usr/share/
+	vbin "./build/release/gittyup"
+	vinstall "./rsrc/linux/com.github.Murmele.Gittyup.desktop" 644 /usr/share/applications
 # 	copy ICONS to relevant dir
 # 	/rsrc/Gittyup.iconset/icon_16x16.png
 # ./rsrc/Gittyup.iconset/icon_256x256@2x.png
