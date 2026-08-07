@@ -13,8 +13,6 @@ makedepends="boost-devel-minimal fmt-devel gtk+3-devel gtkmm-devel
  libdbusmenu-glib-devel libdbusmenu-gtk3-devel libayatana-indicator-devel
  libayatana-appindicator-devel gsettings-desktop-schemas-devel wayland-devel
  gnome-panel-devel libmate-panel-devel xfce4-panel-devel gstreamer1-devel"
-# hostmakedepends="gettext-devel python3-Jinja2 pkg-config gobject-introspection git"
-# makedepends="gtk+3-devel gtkmm-devel libayatana-appindicator-devel libmate-panel-devel xfce4-panel-devel pulseaudio-devel libXScrnSaver-devel spdlog"
 depends="desktop-file-utils hicolor-icon-theme"
 short_desc="Program that assists in the recovery and prevention of RSI"
 maintainer="RandallFlagg <O@G>"
@@ -24,30 +22,6 @@ distfiles="https://github.com/rcaelers/${pkgname}/releases/download/v${_tagversi
 checksum=155d7e31756a169735f416d34dd15d53da083e6a475650e0381d66e2463f3058
 
 
-
-
-# ------------------- DONT TOUCH BELOW THIS LINE -----------------------
-# distfiles="https://github.com/rcaelers/${pkgname}/releases/download/v1_11_1/${pkgname}-${version}.tar.xz"
-
-# Template file for 'workrave'
-# pkgname=workrave
-# version=1.11.1
-# revision=1
-# _tagversion="${version//./_}"
-# build_style=cmake
-# configure_args="-DWITH_UI=Gtk+3 -DWITH_TESTS=OFF"
-# hostmakedepends="cmake ninja pkg-config gettext-devel gobject-introspection
-#  python3-Jinja2"
-# makedepends="boost-devel-minimal fmt-devel gtk+3-devel gtkmm-devel
-#  glibmm-devel libsigc++-devel spdlog libX11-devel libXtst-devel
-#  libXScrnSaver-devel libXi-devel libXmu-devel pulseaudio-devel
-#  libdbusmenu-glib-devel libdbusmenu-gtk3-devel libayatana-indicator-devel
-#  libayatana-appindicator-devel gsettings-desktop-schemas-devel wayland-devel
-#  gnome-panel-devel libmate-panel-devel xfce4-panel-devel gstreamer1-devel"
-# depends="desktop-file-utils hicolor-icon-theme"
-# short_desc="Program that assists in the recovery and prevention of RSI"
-# maintainer="RandallFlagg <O@G>"
-# license="GPL-3.0-or-later"
-# homepage="https://www.workrave.org/"
-# distfiles="https://github.com/rcaelers/${pkgname}/archive/refs/tags/v${_tagversion}.tar.gz"
-# checksum=598168348f5de1443010f111bd0cca3d6c5739ba1704756555c792bf322291bd
+if [ "$XBPS_TARGET_LIBC" = musl ]; then
+	LIBS="-lintl"
+fi
