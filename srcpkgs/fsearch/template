@@ -31,6 +31,15 @@ do_patch() {
 		done
 	fi
 
+	# Apply off64_t fix for 32-bit i686 builds
+	if [[ "$XBPS_TARGET_ARCH" = i686 ]]; then
+		for f in "$PATCHESDIR"/*off64*.patch; do
+			[ -f "$f" ] || continue
+			msg_normal "${pkgver}: patching: ${f##*/}\n"
+			patch -Np1 < "$f"
+		done
+	fi
+
 	# Apply musl-specific patches
 	if [[ "$XBPS_TARGET_LIBC" = musl ]]; then
 		for f in "$PATCHESDIR"/*musl*.patch; do
