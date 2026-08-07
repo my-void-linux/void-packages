@@ -1,6 +1,6 @@
 --- a/src/fsearch_time_utils.c
 +++ b/src/fsearch_time_utils.c
-@@ -377,7 +377,7 @@ parse_implicit_date_time_constants(const
+@@ -376,7 +376,7 @@
  }
  
  static bool
@@ -9,7 +9,7 @@
      struct tm tm_start = {};
      struct tm tm_end = {};
  
-@@ -469,7 +469,7 @@ round_down_tm_to_reference_with_date_tim
+@@ -468,7 +468,7 @@
  }
  
  bool
@@ -31,9 +31,10 @@
 -fsearch_date_time_parse_interval(const char *str, time_t *time_start_out, time_t *time_end_out);
 \ No newline at end of file
 +fsearch_date_time_parse_interval(const char *str, int64_t *time_start_out, int64_t *time_end_out);
+\ No newline at end of file
 --- a/src/tests/test_time_utils.c
 +++ b/src/tests/test_time_utils.c
-@@ -49,8 +49,8 @@ test_parse_time_interval(void) {
+@@ -49,8 +49,8 @@
  
      for (gint i = 0; i < G_N_ELEMENTS(strings); ++i) {
          FsearchTestTimeIntervalParseContext *ctx = &strings[i];
