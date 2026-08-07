@@ -32,7 +32,7 @@ do_patch() {
 	fi
 
 	# Apply off64_t fix for 32-bit i686 builds
-	if [[ "$XBPS_TARGET_ARCH" = i686 ]]; then
+	if [[ "$XBPS_ARCH" = i686 || "$XBPS_TARGET_ARCH" = i686 ]]; then
 		for f in "$PATCHESDIR"/*off64*.patch; do
 			[ -f "$f" ] || continue
 			msg_normal "${pkgver}: patching: ${f##*/}\n"
