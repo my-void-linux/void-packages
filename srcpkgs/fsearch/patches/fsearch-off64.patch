@@ -5,7 +5,7 @@
      // Make also sure to set the cursor checksum again, so folder and file block size are hashed as well
      cursor.checksum = checksum;
 -    if (fseeko(fp, (off64_t)folder_block_size_offset, SEEK_SET) != 0) {
-+    if (fseeko(fp, (off_t)folder_block_size_offset, SEEK_SET) != 0) {
++    if (fseeko64(fp, (off64_t)folder_block_size_offset, SEEK_SET) != 0) {
          goto save_fail;
      }
      g_debug("[db_save] updating file and folder block size: %" PRIu64 ", %" PRIu64, folder_block_size, file_block_size);
@@ -14,7 +14,7 @@
  
      // after writing the folder and file block size, we can
 -    if (fseeko(fp, (off64_t)checksum_offset, SEEK_SET) != 0) {
-+    if (fseeko(fp, (off_t)checksum_offset, SEEK_SET) != 0) {
++    if (fseeko64(fp, (off64_t)checksum_offset, SEEK_SET) != 0) {
          goto save_fail;
      }
      gsize checksum_buffer_len = DATABASE_CHECKSUM_SIZE;
